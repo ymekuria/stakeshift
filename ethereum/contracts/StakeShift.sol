@@ -1,4 +1,4 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.22;
 
 contract StakeShift {
     struct Agreement {
@@ -29,5 +29,13 @@ contract StakeShift {
         agreements[msg.sender] = newAgreement;
     
     }    
-    
+
+    function buyerApprove() public {
+        require(
+            msg.sender == agreements[msg.sender].buyer,
+            "Only the buyer is authorized to approve"
+        );
+
+        agreements[msg.sender].buyerApproved = true;    
+    }
 }
