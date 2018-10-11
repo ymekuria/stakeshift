@@ -28,7 +28,7 @@ contract StakeShift {
         
         agreements[msg.sender] = newAgreement;
     
-    }    
+    }       
 
     function buyerApprove() public {
         require(
@@ -37,5 +37,14 @@ contract StakeShift {
         );
 
         agreements[msg.sender].buyerApproved = true;    
+    }
+
+    function sellerApprove(address buyer) public {
+        require(
+            msg.send == agreements[buyer].seller,
+            "Only the seller is authorized to approve"
+        );
+
+        agreements[buyer].sellerApproved = true;
     }
 }
