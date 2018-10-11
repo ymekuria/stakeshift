@@ -47,4 +47,17 @@ contract StakeShift {
 
         agreements[buyer].sellerApproved = true;
     }
+
+    function completeAgreement(address buyer) public {
+        Agreement memory currentAgreement = agreements[buyer];
+
+        require(
+            currentAgreement.sellerApproved && currentAgreement.buyerApproved,
+            "Both buyer and seller have to approve"
+        );
+
+        currentAgreement.seller.transfer(address(this).balance);
+        
+        currentAgreement.isComplete = true;
+    }
 }
