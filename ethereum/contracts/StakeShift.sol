@@ -41,7 +41,7 @@ contract StakeShift {
 
     function sellerApprove(address buyer) public {
         require(
-            msg.send == agreements[buyer].seller,
+            msg.sender == agreements[buyer].seller,
             "Only the seller is authorized to approve"
         );
 
