@@ -16,4 +16,4 @@ fs.ensureDirSync(buildPath);
 
 // outputJson creates a JSON file at the specified path and name
 // TODO: allow dynamic file and name creaction when more contracts are added
-fs.outputJsonSync(path.resolve(buildPath, 'StakShift.json'), output);
+fs.outputJsonSync(path.resolve(buildPath, 'StakeShift.json'), output);

@@ -17,6 +17,6 @@
     "tar": "^4.4.1",
     "truffle": "^4.1.14",
     "truffle-hdwallet-provider": "0.0.6",
-    "web3": "github:ethereum/web3.js"
+    "web3": "^1.0.0-beta.36"
   }
 }
