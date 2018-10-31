@@ -16,9 +16,11 @@ const deploy = async () => {
       JSON.parse(compiledContract.interface)
     )
 
-      .deploy({ data: compiledContract.bytecode })
-      .send({ gas: '3000000', from: accounts[0] });
-
+      .deploy({ data: '0x' + compiledContract.bytecode })
+      .send({
+        from: accounts[0]
+      });
+    console.log('contractInstance ', contractInstance);
     console.log('Contract deployed to', contractInstance.options.address);
   } catch (error) {
     console.log(error);
