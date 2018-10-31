@@ -5,6 +5,8 @@ const { mnemonic, nodeEndpoint } = require('../config/keys');
 const compiledContract = require('./build/StakeShift.json');
 
 const provider = new HDWalletProvider(mnemonic, nodeEndpoint);
+
+console.log('mnemonic:', mnemonic, 'nodeEndpoint: ', nodeEndpoint);
 const web3 = new Web3(provider);
 
 const deploy = async () => {
@@ -20,7 +22,6 @@ const deploy = async () => {
       .send({
         from: accounts[0]
       });
-    console.log('contractInstance ', contractInstance);
     console.log('Contract deployed to', contractInstance.options.address);
   } catch (error) {
     console.log(error);
