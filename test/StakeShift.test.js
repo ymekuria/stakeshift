@@ -23,4 +23,37 @@ describe('StakeShift', () => {
     console.log('Stake Shift', stakeShift.options.address);
     assert.ok(stakeShift.options.address);
   });
+
+  it('can create an agreement', async () => {
+    const seller = accounts[1];
+    await stakeShift.methods.createAgreement('Yoni test', seller).send({
+      from: accounts[0],
+      gas: '1000000'
+    });
+
+    const agreement = await stakeShift.methods.agreements(accounts[0]).call();
+    assert.equal('Yoni test', agreement.description);
+  });
+
+  it('buyer can approve transaction', async () => {
+    const buyer = accounts[0];
+    const seller = accounts[1];
+
+    await stakeShift.methods.createAgreement('Teddy test', seller).send({
+      from: accounts[0],
+      gas: '1000000'
+    });
+    let agreement = await stakeShift.methods.agreements(accounts[0]).call();
+    // console.log('agreements: ', agreement.buyerApproved);
+    assert.equal(agreement.buyerApproved, false);
+
+    // approve from buyers address
+    await stakeShift.methods.buyerApprove().send({
+      from: buyer,
+      gas: '1000000'
+    });
+    // check agreement after buyerApprove function call
+    agreement = await stakeShift.methods.agreements(accounts[0]).call();
+    assert.equal(agreement.buyerApproved, true);
+  });
 });
