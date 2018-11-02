@@ -3,3 +3,10 @@ node_js:
   - '11'
 env:
   - NODE_ENV=ci
+cache:
+  directories:
+    - node_modules
+install:
+  - npm install
+script:
+  - npm run test
