@@ -40,7 +40,6 @@ describe('StakeShift', () => {
   });
 
   it('buyer can approve transaction from their address', async () => {
-    console.log('agreements: ', agreement.buyerApproved);
     assert.equal(agreement.buyerApproved, false);
 
     // approve from buyers address
@@ -52,5 +51,26 @@ describe('StakeShift', () => {
     // check agreement after buyerApprove function call
     agreement = await stakeShift.methods.agreements(buyer).call();
     assert.equal(agreement.buyerApproved, true);
+  });
+
+  it('seller cannot toggle buyerApproved boolean', async () => {
+    agreement = await stakeShift.methods.agreements(buyer).call();
+    assert.equal(agreement.buyerApproved, false);
+
+    // try toggle buyerApproved bolean from seller address
+    try {
+      await stakeShift.methods.buyerApprove().send({
+        from: seller,
+        gas: '1000000'
+      });
+      // if transaction goes through fail test
+      assert(false);
+    } catch (error) {
+      console.log('error', error.message);
+    }
+
+    // check agreement after buyerApprove function call
+    agreement = await stakeShift.methods.agreements(buyer).call();
+    assert.equal(agreement.buyerApproved, false);
   });
 });
