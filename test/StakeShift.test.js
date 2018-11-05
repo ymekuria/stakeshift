@@ -73,4 +73,18 @@ describe('StakeShift', () => {
     agreement = await stakeShift.methods.agreements(buyer).call();
     assert.equal(agreement.buyerApproved, false);
   });
+
+  it('seller can approve transaction from their address', async () => {
+    assert.equal(agreement.sellerApproved, false);
+
+    // approve from buyers address
+    await stakeShift.methods.sellerApprove(buyer).send({
+      from: seller,
+      gas: '1000000'
+    });
+
+    // check agreement after sellerApprove function call
+    agreement = await stakeShift.methods.agreements(buyer).call();
+    assert.equal(agreement.sellerApproved, true);
+  });
 });
