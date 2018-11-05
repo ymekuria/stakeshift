@@ -87,4 +87,25 @@ describe('StakeShift', () => {
     agreement = await stakeShift.methods.agreements(buyer).call();
     assert.equal(agreement.sellerApproved, true);
   });
+
+  it('buyer cannot toggle sellerApproved boolean', async () => {
+    agreement = await stakeShift.methods.agreements(buyer).call();
+    assert.equal(agreement.sellerApproved, false);
+
+    // try toggle buyerApproved bolean from buyer address
+    try {
+      await stakeShift.methods.sellerApprove(buyer).send({
+        from: buyer,
+        gas: '1000000'
+      });
+      // if transaction goes through fail test
+      assert(false);
+    } catch (error) {
+      console.log('error', error.message);
+    }
+
+    // check agreement after buyerApprove function call
+    agreement = await stakeShift.methods.agreements(buyer).call();
+    assert.equal(agreement.sellerApproved, false);
+  });
 });
