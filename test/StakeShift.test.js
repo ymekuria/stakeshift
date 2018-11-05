@@ -66,7 +66,7 @@ describe('StakeShift', () => {
       // if transaction goes through fail test
       assert(false);
     } catch (error) {
-      console.log('error', error.message);
+      console.log(error.message);
     }
 
     // check agreement after buyerApprove function call
@@ -101,11 +101,26 @@ describe('StakeShift', () => {
       // if transaction goes through fail test
       assert(false);
     } catch (error) {
-      console.log('error', error.message);
+      console.log(error.message);
     }
 
     // check agreement after buyerApprove function call
     agreement = await stakeShift.methods.agreements(buyer).call();
     assert.equal(agreement.sellerApproved, false);
+  });
+
+  it('cannot complete an agreement without buyer and seller approval', async () => {
+    agreement = await stakeShift.methods.agreements(buyer).call();
+    assert.equal(agreement.buyerApproved, false);
+
+    try {
+      await stakeShift.methods.completeAgreement(buyer).send({
+        from: buyer,
+        gas: '1000000'
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+    assert.equal(agreement.isComplete, false);
   });
 });
