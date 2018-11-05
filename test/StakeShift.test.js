@@ -8,6 +8,7 @@ const compliedContract = require('../ethereum/build/StakeShift.json');
 let accounts;
 let buyer;
 let seller;
+let amount;
 let stakeShift;
 const contractJSONInterface = JSON.parse(compliedContract.interface);
 
@@ -15,16 +16,18 @@ beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
   buyer = accounts[0];
   seller = accounts[1];
+  amount = '10000000000000000000';
 
   // deploying the contract to a ganache local test network
   stakeShift = await new web3.eth.Contract(contractJSONInterface)
     .deploy({ data: compliedContract.bytecode })
-    .send({ from: accounts[0], gas: '2000000' });
+    .send({ from: buyer, gas: '2000000' });
 
   // create a test agreement
   await stakeShift.methods.createAgreement('Yoni test', seller).send({
     from: buyer,
-    gas: '1000000'
+    gas: '1000000',
+    value: amount
   });
 });
 
@@ -122,5 +125,38 @@ describe('StakeShift', () => {
       console.log(error.message);
     }
     assert.equal(agreement.isComplete, false);
+  });
+
+  it('can complete an agreement with buyer and seller approval', async () => {
+    agreement = await stakeShift.methods.agreements(buyer).call();
+    assert.equal(agreement.isComplete, false);
+
+    try {
+      await stakeShift.methods.buyerApprove().send({
+        from: buyer,
+        gas: '1000000'
+      });
+
+      await stakeShift.methods.sellerApprove(buyer).send({
+        from: seller,
+        gas: '1000000'
+      });
+
+      await stakeShift.methods.completeAgreement(buyer).send({
+        from: seller,
+        gas: '1000000'
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+    agreement = await stakeShift.methods.agreements(buyer).call();
+
+    assert.equal(agreement.isComplete, true);
+
+    // check if contract balance is transfered to the seller
+    let sellerBalance = await web3.eth.getBalance(seller);
+    sellerBalance = await web3.utils.fromWei(sellerBalance, 'ether');
+
+    assert(parseFloat(sellerBalance) > 109);
   });
 });
