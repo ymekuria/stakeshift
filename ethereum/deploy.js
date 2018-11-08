@@ -6,7 +6,6 @@ const compiledContract = require('./build/StakeShift.json');
 
 const provider = new HDWalletProvider(mnemonic, nodeEndpoint);
 
-console.log('mnemonic:', mnemonic, 'nodeEndpoint: ', nodeEndpoint);
 const web3 = new Web3(provider);
 
 const deploy = async () => {

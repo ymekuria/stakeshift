@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StakeShift from '../ethereum/stakeShift';
+import StakeShift from '../utils/ethereum/stakeShift';
 
 class App extends Component {
   async componentDidMount() {
