@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+// import { LoadingContainer } from 'drizzle-react-components';
 import Header from './Header';
+import Landing from './Landing';
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <div>
+          {/* <LoadingContainer> */}
           <Header />
+          <Switch>
+            <Route exact path="/" component={Landing} />
+          </Switch>
+          {/* </LoadingContainer> */}
         </div>
       </BrowserRouter>
     );

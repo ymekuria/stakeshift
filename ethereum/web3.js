@@ -4,7 +4,7 @@ let web3;
 
 // this checks to see if the code is running in the browser
 // and if the user is using metamask
-if (typeof window !== 'undefined' && window.web3 !== 'undefined') {
+if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
   // if we are both in the browser and using metamask, use the injected
   // metamask provider for this instance of web3
   web3 = new Web3(window.web3.currentProvider);

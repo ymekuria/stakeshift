@@ -9,6 +9,7 @@ fs.removeSync(buildPath);
 const contractPath = path.resolve(__dirname, 'contracts', 'StakeShift.sol');
 const source = fs.readFileSync(contractPath, 'utf8');
 
+// const output = solc.compile(source, 1).contracts[':StakeShift'];
 const output = solc.compile(source, 1).contracts[':StakeShift'];
 
 // checks to see if directory exists. If not it creates it
