@@ -14,4 +14,12 @@ const store = createStore(
   compose(applyMiddleware(thunk, logger))
 );
 
+if (module.hot) {
+  // Webpack hot module replacement for reducers
+  module.hot.accept('../reducers', () => {
+    const nextRootReducer = require('../reducers').default;
+    store.replaceReducer(nextRootReducer);
+  });
+}
+
 export default store;

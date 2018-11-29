@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { DrizzleContext } from 'drizzle-react';
+// import { LoadingContainer } from 'drizzle-react-components';
 import Header from './Header';
 import Landing from './Landing';
-import drizzleOptions from '../utils/drizzleOptions';
-
+import CreateAgreement from './CreateAreement';
 class App extends Component {
   render() {
     return (
-       
       <BrowserRouter>
         <div>
-          <DrizzleContext.Provider drizzle={drizzleOptions}> 
+          {/* <LoadingContainer> */}
           <Header />
           <Switch>
             <Route exact path="/" component={Landing} />
+            <Route exact path="/create" component={CreateAgreement} />
           </Switch>
-          </DrizzleContext.Provider>
+          {/* </LoadingContainer> */}
         </div>
       </BrowserRouter>
     );

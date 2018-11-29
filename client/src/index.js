@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-//import { DrizzleContext } from 'drizzle-react';
+import { DrizzleContext } from 'drizzle-react';
 import App from './components/App';
-
-// import drizzleOptions from './utils/drizzleOptions';
+import drizzleOptions from './utils/drizzleOptions';
 
 ReactDOM.render(
-  <Provider drizzle={drizzleOptions}>
+  <DrizzleContext.Provider drizzle={drizzleOptions}>
     <App />
-  </Provider>,
+  </DrizzleContext.Provider>,
   document.getElementById('root')
 );
