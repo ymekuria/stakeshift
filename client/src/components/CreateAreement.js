@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
+import { Button, Form, Input, Message, Card, Segment } from 'semantic-ui-react';
 
 class CreateAgreement extends Component {
   state = {
@@ -34,33 +34,30 @@ class CreateAgreement extends Component {
     const { sellerAddress, amount } = this.state;
 
     return (
-      <form style={styles.formStyle} onSubmit={this.onSubmit}>
-        <input
-          type="text"
-          placeholder="Seller Address"
-          value={sellerAddress}
-          onChange={e => {
-            this.setState({ sellerAddress: e.target.value });
-            console.log('state', this.state);
-          }}
-        />
-        <input
-          type="text"
-          placeholder="Amount in Wei"
-          value={amount}
-          onChange={e => this.setState({ amount: e.target.value })}
-        />
-        <Button>Create</Button>
-      </form>
+      <Segment raised padded="very">
+        <Form size="big" centered>
+          <Form.Field>
+            <Input
+              label="Seller Address"
+              labelPosition="right"
+              placeholder="0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413"
+            />
+          </Form.Field>
+          <Form.Field>
+            <Input label="Wei" labelPosition="right" placeholder="10000000" />
+          </Form.Field>
+          <Message
+            error
+            header="Action Forbidden"
+            content="You can only sign up for an account once with a given e-mail address."
+          />
+          <Form.Field>
+            <Button primary icon="add circle" content="Create" />
+          </Form.Field>
+        </Form>
+      </Segment>
     );
   }
 }
-
-const styles = {
-  formStyle: {
-    display: 'flex',
-    flexDirection: 'column'
-  }
-};
 
 export default CreateAgreement;
