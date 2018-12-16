@@ -3,6 +3,9 @@ import reducers from '../reducers';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
+// redux dev tools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const logger = createLogger({
   collapsed: true,
   predicate: () => process.env.NODE_ENV === 'development'
@@ -11,7 +14,7 @@ const logger = createLogger({
 const store = createStore(
   reducers,
   {},
-  compose(applyMiddleware(thunk, logger))
+  composeEnhancers(applyMiddleware(thunk, logger))
 );
 
 if (module.hot) {
