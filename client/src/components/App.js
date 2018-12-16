@@ -9,13 +9,11 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          {/* <LoadingContainer> */}
           <Header />
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route exact path="/create" component={CreateAgreement} />
           </Switch>
-          {/* </LoadingContainer> */}
         </div>
       </BrowserRouter>
     );

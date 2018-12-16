@@ -8,16 +8,27 @@ class CreateAgreement extends Component {
     stakeId: null
   };
 
-  componentDidMount() {
-    const { drizzle } = this.props;
+  async componentDidMount() {
+    const { drizzle, drizzleState } = this.props;
     const contract = drizzle.contracts.StakeShift;
-    // const stackId = contract.methods.createAgreement.cacheSend(2, {
-    //   from: contract.accounts[0]
-    // });
-    // this.setState({ stackId });
+
+    const stackId = await contract.methods.createAgreement.cacheSend(
+      'First Agreement',
+      '0x14723a09acff6d2a60dcdf7aa4aff308fddc160c',
+      {
+        from: '0x79F9Bb6AbF20Df043a7cC0Ed2b299D06C08b0a6A'
+      }
+    );
+    this.setState({ stackId });
+    console.log('stackID', stackId);
+    if (this.props.drizzleState.transactionStack[stackId]) {
+      const txHash = this.props.drizzleState.transactionStack[stackId];
+
+      console.log('tx', this.props.drizzleState.transactions[txHash].status);
+    }
     // const stackId = drizzle.contracts.SimpleStorage.methods.set.cacheSend(2, { from: '0x3f...' })
 
-    console.log('drizzle in App', drizzle);
+    console.log('drizzleState', drizzleState.transactionStack[stackId]);
   }
   handleInput = event => {
     event.preventDefault();
@@ -35,7 +46,7 @@ class CreateAgreement extends Component {
 
     return (
       <Segment raised padded="very">
-        <Form size="big" centered>
+        <Form size="big">
           <Form.Field>
             <Input
               label="Seller Address"
