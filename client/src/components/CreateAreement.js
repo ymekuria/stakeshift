@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, Input, Message, Card, Segment } from 'semantic-ui-react';
+import { Field, reduxForm } from 'redux-form';
 
 class CreateAgreement extends Component {
   state = {
@@ -35,22 +36,19 @@ class CreateAgreement extends Component {
     this.setState.sellerAddress = event.value;
   };
 
-  onSubmit = event => {
-    event.preventDefault();
-    // drizzle actions etc
-    console.table(this.state);
+  renderInput = ({ input }) => {
+    return <Input {...input} />;
   };
 
   render() {
-    const { sellerAddress, amount } = this.state;
-
     return (
       <Segment raised padded="very">
         <Form size="big">
           <Form.Field>
-            <Input
+            <Field
+              name="sellerAddress"
+              component={this.renderInput}
               label="Seller Address"
-              labelPosition="right"
               placeholder="0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413"
             />
           </Form.Field>
@@ -71,4 +69,6 @@ class CreateAgreement extends Component {
   }
 }
 
-export default CreateAgreement;
+export default reduxForm({
+  form: 'createAgreement'
+})(CreateAgreement);
