@@ -31,11 +31,6 @@ class CreateAgreement extends Component {
 
     console.log('drizzleState', drizzleState.transactionStack[stackId]);
   }
-  handleInput = event => {
-    event.preventDefault();
-    this.setState.sellerAddress = event.value;
-  };
-
   renderInput = ({ input, label, placeholder }) => {
     return (
       <Input
@@ -47,10 +42,14 @@ class CreateAgreement extends Component {
     );
   };
 
+  onSubmit = formValues => {
+    console.log('formValues', formValues);
+  };
+
   render() {
     return (
       <Segment raised padded="very">
-        <Form size="big">
+        <Form onSubmit={this.props.handleSubmit(this.onSubmit)} size="big">
           <Form.Field>
             <Field
               name="sellerAddress"
