@@ -36,8 +36,15 @@ class CreateAgreement extends Component {
     this.setState.sellerAddress = event.value;
   };
 
-  renderInput = ({ input }) => {
-    return <Input {...input} />;
+  renderInput = ({ input, label, placeholder }) => {
+    return (
+      <Input
+        {...input}
+        label={label}
+        labelPosition="right"
+        placeholder={placeholder}
+      />
+    );
   };
 
   render() {
@@ -53,7 +60,13 @@ class CreateAgreement extends Component {
             />
           </Form.Field>
           <Form.Field>
-            <Input label="Wei" labelPosition="right" placeholder="10000000" />
+            <Field
+              name="agreementAmount"
+              component={this.renderInput}
+              label="Wei"
+              labelPosition="right"
+              placeholder="10000000"
+            />
           </Form.Field>
           <Message
             error
