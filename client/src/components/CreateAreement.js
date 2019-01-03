@@ -81,6 +81,21 @@ class CreateAgreement extends Component {
   }
 }
 
+const validate = formValues => {
+  const errors = {};
+
+  if (!formValues.sellerAddress) {
+    errors.sellerAddress = 'You must enter the sellers address';
+  }
+
+  if (!formValues.aggreementAmount) {
+    errors.agreementAmount = 'You must enter an amount';
+  }
+
+  return errors;
+};
+
 export default reduxForm({
-  form: 'createAgreement'
+  form: 'createAgreement',
+  validate
 })(CreateAgreement);
