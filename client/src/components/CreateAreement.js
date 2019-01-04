@@ -31,14 +31,17 @@ class CreateAgreement extends Component {
 
     console.log('drizzleState', drizzleState.transactionStack[stackId]);
   }
-  renderInput = ({ input, label, placeholder }) => {
+  renderInput = ({ input, label, placeholder, meta }) => {
     return (
-      <Input
-        {...input}
-        label={label}
-        labelPosition="right"
-        placeholder={placeholder}
-      />
+      <div>
+        <Input
+          {...input}
+          label={label}
+          labelPosition="right"
+          placeholder={placeholder}
+        />
+        <div>{meta.error}</div>
+      </div>
     );
   };
 
