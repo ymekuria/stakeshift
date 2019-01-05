@@ -32,6 +32,7 @@ class CreateAgreement extends Component {
     console.log('drizzleState', drizzleState.transactionStack[stackId]);
   }
   renderInput = ({ input, label, placeholder, meta }) => {
+    console.log('meta', meta);
     return (
       <div>
         <Input
@@ -40,7 +41,7 @@ class CreateAgreement extends Component {
           labelPosition="right"
           placeholder={placeholder}
         />
-        <div>{meta.error}</div>
+        <i style={{ color: 'red' }}>{meta.touched ? meta.error : ''}</i>
       </div>
     );
   };
@@ -91,7 +92,7 @@ const validate = formValues => {
     errors.sellerAddress = 'You must enter the sellers address';
   }
 
-  if (!formValues.aggreementAmount) {
+  if (!formValues.agreementAmount) {
     errors.agreementAmount = 'You must enter an amount';
   }
 
