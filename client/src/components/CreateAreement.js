@@ -32,7 +32,6 @@ class CreateAgreement extends Component {
     console.log('drizzleState', drizzleState.transactionStack[stackId]);
   }
   renderInput = ({ input, label, placeholder, meta }) => {
-    console.log('meta', meta);
     return (
       <div>
         <Input
@@ -40,8 +39,11 @@ class CreateAgreement extends Component {
           label={label}
           labelPosition="right"
           placeholder={placeholder}
+          autoComplete="off"
         />
-        <i style={{ color: 'red' }}>{meta.touched ? meta.error : ''}</i>
+        <i className="ui error message">
+          {meta.touched && meta.error ? meta.error : ''}
+        </i>
       </div>
     );
   };
@@ -53,7 +55,11 @@ class CreateAgreement extends Component {
   render() {
     return (
       <Segment raised padded="very">
-        <Form onSubmit={this.props.handleSubmit(this.onSubmit)} size="big">
+        <Form
+          onSubmit={this.props.handleSubmit(this.onSubmit)}
+          size="big"
+          error
+        >
           <Form.Field>
             <Field
               name="sellerAddress"
@@ -71,11 +77,6 @@ class CreateAgreement extends Component {
               placeholder="10000000"
             />
           </Form.Field>
-          <Message
-            error
-            header="Action Forbidden"
-            content="You can only sign up for an account once with a given e-mail address."
-          />
           <Form.Field>
             <Button primary icon="add circle" content="Create" />
           </Form.Field>
