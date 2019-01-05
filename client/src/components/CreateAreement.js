@@ -32,18 +32,18 @@ class CreateAgreement extends Component {
     console.log('drizzleState', drizzleState.transactionStack[stackId]);
   }
   renderInput = ({ input, label, placeholder, meta }) => {
+    const isError = meta.touched && meta.error;
     return (
       <div>
         <Input
+          className={`field ${isError ? 'error' : ''}`}
           {...input}
           label={label}
           labelPosition="right"
           placeholder={placeholder}
           autoComplete="off"
         />
-        <i className="ui error message">
-          {meta.touched && meta.error ? meta.error : ''}
-        </i>
+        <i className="ui error message">{isError ? meta.error : ''}</i>
       </div>
     );
   };
@@ -95,6 +95,10 @@ const validate = formValues => {
 
   if (!formValues.agreementAmount) {
     errors.agreementAmount = 'You must enter an amount';
+  }
+
+  if (typeof formValues.agreementAmount !== 'number') {
+    errors.agreementAmount = 'You must enter an number amount in wei';
   }
 
   return errors;
