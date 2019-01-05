@@ -93,11 +93,23 @@ const validate = formValues => {
     errors.sellerAddress = 'You must enter the sellers address';
   }
 
+  if (
+    formValues.sellerAddress &&
+    formValues.sellerAddress.toString().length !== 42
+  ) {
+    errors.sellerAddress = 'You must enter a valid seller address';
+  }
+  if (
+    formValues.sellerAddress &&
+    formValues.sellerAddress.toString().slice(0, 2) !== '0x'
+  ) {
+    errors.sellerAddress = 'You must enter a valid seller address';
+  }
+
   if (!formValues.agreementAmount) {
     errors.agreementAmount = 'You must enter an amount';
   }
-
-  if (typeof formValues.agreementAmount !== 'number') {
+  if (/^\d+$/.test(formValues.agreementAmount) === false) {
     errors.agreementAmount = 'You must enter an number amount in wei';
   }
 
