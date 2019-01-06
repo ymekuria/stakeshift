@@ -86,26 +86,22 @@ class CreateAgreement extends Component {
   }
 }
 
-const validate = formValues => {
+const validate = ({ sellerAddress, agreementAmount }) => {
   const errors = {};
+  const isValidAddress = !/^(0x)?[0-9a-f]{40}$/i.test(sellerAddress);
 
-  if (!formValues.sellerAddress) {
+  if (!sellerAddress) {
     errors.sellerAddress = 'You must enter the sellers address';
   }
 
-  if (formValues.sellerAddress) {
-    if (formValues.sellerAddress.toString().length !== 42) {
-      errors.sellerAddress = 'You must enter a valid 42 digit seller address ';
-    }
-    if (formValues.sellerAddress.toString().slice(0, 2) !== '0x') {
-      errors.sellerAddress = 'You must enter a valid seller address';
-    }
+  if (sellerAddress && isValidAddress) {
+    errors.sellerAddress = 'You must enter a valid seller address ';
   }
 
-  if (!formValues.agreementAmount) {
+  if (!agreementAmount) {
     errors.agreementAmount = 'You must enter an amount';
   }
-  if (/^\d+$/.test(formValues.agreementAmount) === false) {
+  if (/^\d+$/.test(agreementAmount) === false) {
     errors.agreementAmount = 'You must enter a number amount in wei';
   }
 
