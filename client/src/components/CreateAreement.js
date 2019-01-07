@@ -1,36 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Form, Input, Message, Card, Segment } from 'semantic-ui-react';
+import { Button, Form, Input, Segment } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 
 class CreateAgreement extends Component {
-  state = {
-    sellerAddress: '',
-    amount: '',
-    stakeId: null
-  };
-
-  async componentDidMount() {
-    const { drizzle, drizzleState } = this.props;
-    const contract = drizzle.contracts.StakeShift;
-
-    const stackId = await contract.methods.createAgreement.cacheSend(
-      'First Agreement',
-      '0x14723a09acff6d2a60dcdf7aa4aff308fddc160c',
-      {
-        from: '0x79F9Bb6AbF20Df043a7cC0Ed2b299D06C08b0a6A'
-      }
-    );
-    this.setState({ stackId });
-    console.log('stackID', stackId);
-    if (this.props.drizzleState.transactionStack[stackId]) {
-      const txHash = this.props.drizzleState.transactionStack[stackId];
-
-      console.log('tx', this.props.drizzleState.transactions[txHash].status);
-    }
-    // const stackId = drizzle.contracts.SimpleStorage.methods.set.cacheSend(2, { from: '0x3f...' })
-
-    console.log('drizzleState', drizzleState.transactionStack[stackId]);
-  }
   renderInput = ({ input, label, placeholder, meta }) => {
     const isError = meta.touched && meta.error;
     return (
@@ -43,13 +15,24 @@ class CreateAgreement extends Component {
           placeholder={placeholder}
           autoComplete="off"
         />
-        <i className="ui error message">{isError ? meta.error : ''}</i>
+        <div className="ui error message">{isError ? meta.error : ''}</div>
       </div>
     );
   };
 
-  onSubmit = formValues => {
-    console.log('formValues', formValues);
+  onSubmit = async ({ description, agreementAmount, sellerAddress }) => {
+    const { drizzle, drizzleState } = this.props;
+
+    const contract = drizzle.contracts.StakeShift;
+
+    await contract.methods.createAgreement.cacheSend(
+      description,
+      sellerAddress,
+      {
+        from: drizzleState.accounts[0],
+        value: agreementAmount
+      }
+    );
   };
 
   render() {
@@ -61,6 +44,12 @@ class CreateAgreement extends Component {
           error
         >
           <Form.Field>
+            <Field
+              name="description"
+              component={this.renderInput}
+              label="Description"
+              placeholder="Add Description"
+            />
             <Field
               name="sellerAddress"
               component={this.renderInput}
