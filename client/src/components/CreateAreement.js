@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Button, Form, Input, Segment } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 
@@ -33,9 +34,12 @@ class CreateAgreement extends Component {
         value: agreementAmount
       }
     );
+
+    this.props.history.push('/agreements');
   };
 
   render() {
+    console.log('this.props.history ', this.props.history);
     return (
       <Segment raised padded="very">
         <Form
@@ -100,4 +104,4 @@ const validate = ({ sellerAddress, agreementAmount }) => {
 export default reduxForm({
   form: 'createAgreement',
   validate
-})(CreateAgreement);
+})(withRouter(CreateAgreement));

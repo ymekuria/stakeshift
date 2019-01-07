@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './Header';
 import Landing from './Landing';
 import CreateAgreement from './CreateAreement';
+import Agreements from './Agreements';
+
 class App extends Component {
   render() {
     return (
@@ -13,6 +15,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route exact path="/create" component={CreateAgreement} />
+            <Route exact path="/agreements" component={Agreements} />
           </Switch>
         </div>
       </BrowserRouter>
