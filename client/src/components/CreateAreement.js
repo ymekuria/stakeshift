@@ -26,6 +26,8 @@ class CreateAgreement extends Component {
 
     const contract = drizzle.contracts.StakeShift;
 
+    console.log('drizzle Accounts', drizzleState.accounts[0]);
+
     await contract.methods.createAgreement.cacheSend(
       description,
       sellerAddress,
