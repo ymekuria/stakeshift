@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { DrizzleContext } from 'drizzle-react';
-import DrizzleApp from './DrizzleApp';
 import CreateAgreement from './CreateAreement';
 
 export default () => (
