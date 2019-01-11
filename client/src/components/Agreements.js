@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Segment } from 'semantic-ui-react';
 import withDrizzle from '../utils/withDrizzle';
 
 class Agreements extends Component {
@@ -19,7 +20,11 @@ class Agreements extends Component {
     // use the data keyto get contract state from Drizzle
     const agreements = StakeShift.agreements[this.state.dataKey];
     // display values if they exist
-    return <div>Agreements{agreements && agreements.value.description}</div>;
+    return (
+      <Segment raised padded="very">
+        <div>Agreements{agreements && agreements.value.description}</div>;
+      </Segment>
+    );
   }
 }
 

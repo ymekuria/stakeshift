@@ -41,7 +41,6 @@ class CreateAgreement extends Component {
   };
 
   render() {
-    console.log('this.props.history ', this.props.history);
     return (
       <Segment raised padded="very">
         <Form

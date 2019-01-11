@@ -1,5 +1,6 @@
 import React from 'react';
 import { DrizzleContext } from 'drizzle-react';
+import Loading from '../components/Loading';
 
 export default Component => {
   return props => (
@@ -8,7 +9,7 @@ export default Component => {
         const { drizzle, drizzleState, initialized } = drizzleContext;
         if (!initialized) {
           // TODO: create loading Component
-          return 'Loading Page...';
+          return <Loading />;
         }
 
         return (
