@@ -39,23 +39,57 @@ class Agreements extends Component {
       } = agreements.value;
       return (
         <Segment.Group>
-          <Segment>Top</Segment>
           <Segment>{`descrpition ${description}`}</Segment>
-          <Segment.Group>
+          <Segment>
             <Segment>{`Agreement Amount ${amount}`}</Segment>
             <Segment>{`Status ${isComplete}`}</Segment>
-            <Segment.Group horizontal>
-              <Segment>{`Buyer ${buyer}`}</Segment>
-              <Segment>{`Buyer Approved ${buyerApproved}`}</Segment>
-            </Segment.Group>
-            <Segment.Group horizontal>
-              <Segment>{`Seller ${seller}`}</Segment>
-              <Segment>{`Seller Approved ${sellerApproved}`}</Segment>
-            </Segment.Group>
-          </Segment.Group>
+            {this.renderApprovalButtons(
+              buyer,
+              buyerApproved,
+              seller,
+              sellerApproved
+            )}
+          </Segment>
         </Segment.Group>
       );
     }
+  };
+
+  renderApprovalButtons = (buyer, buyerApproved, seller, sellerApproved) => {
+    const currentUser = this.props.drizzleState.accounts[0];
+
+    if (currentUser === buyer) {
+      return (
+        <div>
+          <Segment>
+            <Segment>{`Buyer ${buyer}`}</Segment>
+            <Segment>
+              {buyerApproved ? 'You Approved' : 'Approve Agreement'}
+            </Segment>
+          </Segment>
+          <Segment>
+            <Segment horizontal>{`Seller ${seller}`}</Segment>
+            <Segment horizontal>
+              {sellerApproved
+                ? 'Seller Approved'
+                : 'Waiting on Seller Approval'}
+            </Segment>
+          </Segment>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <Segment>
+          <Segment>{`Buyer ${buyer}`}</Segment>
+          <Segment>{`buyerApproved ${buyerApproved}`}</Segment>
+        </Segment>
+        <Segment>
+          <Segment horizontal>{`Seller ${seller}`}</Segment>
+          <Segment horizontal>{`Seller Approved ${sellerApproved}`}</Segment>
+        </Segment>
+      </div>
+    );
   };
   render() {
     // display values if they exist
