@@ -5,7 +5,7 @@ export default () => {
   return (
     <div>
       <Dimmer active>
-        <Loader indeterminat inline="centered" size="huge">
+        <Loader indeterminat="true" inline="centered" size="huge">
           Syncing With the Ethereum Blockchain
         </Loader>
       </Dimmer>
