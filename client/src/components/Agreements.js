@@ -53,18 +53,14 @@ class Agreements extends Component {
               />
             </Segment>
             <Segment>
-              <Segment horizontal>{`Seller ${seller}`}</Segment>
-              <Segment horizontal>
-                {/* {sellerApproved
-                ? 'Seller Approved'
-                : 'Waiting on Seller Approval'} */}
+              <Segment>{`Seller ${seller}`}</Segment>
+              <Segment>
                 <ApprovalDisplay
                   agreements={agreements}
                   currentUser={currentUser}
                 />
               </Segment>
             </Segment>
-            {/* {this.renderApprovalButtons(agreements.value)} */}
           </Segment>
         </Segment.Group>
       );

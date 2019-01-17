@@ -102,7 +102,9 @@ const validate = ({ sellerAddress, agreementAmount }) => {
   return errors;
 };
 
-export default reduxForm({
-  form: 'createAgreement',
-  validate
-})(withRouter(CreateAgreement));
+export default withRouter(
+  reduxForm({
+    form: 'createAgreement',
+    validate
+  })(CreateAgreement)
+);
