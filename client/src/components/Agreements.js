@@ -39,6 +39,8 @@ class Agreements extends Component {
         sellerApproved,
         isComplete
       } = agreements.value;
+      const currentUserParty = currentUser === buyer ? 'Buyer' : 'Seller';
+      const counterParty = currentUserParty === 'Buyer' ? 'Seller' : 'Buyer';
       return (
         <Segment.Group>
           <Segment>{`descrpition ${description}`}</Segment>
@@ -46,31 +48,32 @@ class Agreements extends Component {
             <Segment>{`Agreement Amount ${amount}`}</Segment>
             <Segment>{`Status ${isComplete}`}</Segment>
             <Segment>
-              <Segment>{`Buyer ${buyer}`}</Segment>
+              <Segment basic>{`Buyer ${buyer}`}</Segment>
               <ApprovalDisplay
                 agreements={agreements}
-                currentUser={currentUser}
+                currentUserParty={currentUserParty}
+                counterParty={counterParty}
               />
             </Segment>
             <Segment>
-              <Segment>{`Seller ${seller}`}</Segment>
-              <Segment>
-                <ApprovalDisplay
-                  agreements={agreements}
-                  currentUser={currentUser}
-                />
-              </Segment>
+              <Item>{`Seller ${seller}`}</Item>
+
+              <ApprovalDisplay
+                agreements={agreements}
+                currentUserParty={currentUserParty}
+                counterParty={counterParty}
+              />
             </Segment>
           </Segment>
         </Segment.Group>
       );
     }
   };
-
   render() {
-    // display values if they exist
     return <Segment.Group>{this.renderAgreements()}</Segment.Group>;
   }
 }
+
+// }
 
 export default withDrizzle(Agreements);

@@ -1,45 +1,21 @@
 import React from 'react';
 import { Segment, Button } from 'semantic-ui-react';
 
-const renderApprovalButton = (
-  currentUser,
-  buyer,
-  seller,
-  buyerApproved,
-  sellerApproved
-) => {
-  if (currentUser === buyer) {
-    if (buyerApproved) {
-      return 'You Have Approved';
-    } else {
-      return <Button primary icon="add circle" content="Approve" />;
-    }
-  } else {
-    if (sellerApproved) {
-      return 'You Have Approved';
-    } else {
-      return <Button primary icon="add circle" content="Approve" />;
-    }
-  }
-};
-
-const ApprovalDisplay = ({
-  currentUser,
-  buyer,
-  seller,
-  buyerApproved,
-  sellerApproved
-}) => {
+const ApprovalDisplay = props => {
+  console.log(props);
   return (
-    <Segment>
-      {renderApprovalButton(
-        currentUser,
-        buyer,
-        seller,
-        buyerApproved,
-        sellerApproved
-      )}
-    </Segment>
+    <Segment.Group horizontal>
+      <Segment basic={true}>
+        <Button
+          primary
+          icon="add circle"
+          content={`${props.currentUserParty} Approve`}
+        />
+      </Segment>
+      <Segment color="green">{`Pending ${
+        props.counterParty
+      } Approval`}</Segment>
+    </Segment.Group>
   );
 };
 
