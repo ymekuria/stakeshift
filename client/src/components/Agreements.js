@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Segment, Item, Button } from 'semantic-ui-react';
 import withDrizzle from '../utils/withDrizzle';
+import ApprovalDisplay from './ApprovalDisplay';
 
 class Agreements extends Component {
   state = { dataKey: null };
@@ -24,6 +25,7 @@ class Agreements extends Component {
   // sellerApproved: false
 
   renderAgreements = () => {
+    const currentUser = this.props.drizzleState.accounts[0];
     const { StakeShift } = this.props.drizzleState.contracts;
     // use the dataKey to get contract state from Drizzle
     const agreements = StakeShift.agreements[this.state.dataKey];
@@ -43,54 +45,32 @@ class Agreements extends Component {
           <Segment>
             <Segment>{`Agreement Amount ${amount}`}</Segment>
             <Segment>{`Status ${isComplete}`}</Segment>
-            {this.renderApprovalButtons(
-              buyer,
-              buyerApproved,
-              seller,
-              sellerApproved
-            )}
+            <Segment>
+              <Segment>{`Buyer ${buyer}`}</Segment>
+              <ApprovalDisplay
+                agreements={agreements}
+                currentUser={currentUser}
+              />
+            </Segment>
+            <Segment>
+              <Segment horizontal>{`Seller ${seller}`}</Segment>
+              <Segment horizontal>
+                {/* {sellerApproved
+                ? 'Seller Approved'
+                : 'Waiting on Seller Approval'} */}
+                <ApprovalDisplay
+                  agreements={agreements}
+                  currentUser={currentUser}
+                />
+              </Segment>
+            </Segment>
+            {/* {this.renderApprovalButtons(agreements.value)} */}
           </Segment>
         </Segment.Group>
       );
     }
   };
 
-  renderApprovalButtons = (buyer, buyerApproved, seller, sellerApproved) => {
-    const currentUser = this.props.drizzleState.accounts[0];
-
-    if (currentUser === buyer) {
-      return (
-        <div>
-          <Segment>
-            <Segment>{`Buyer ${buyer}`}</Segment>
-            <Segment>
-              {buyerApproved ? 'You Approved' : 'Approve Agreement'}
-            </Segment>
-          </Segment>
-          <Segment>
-            <Segment horizontal>{`Seller ${seller}`}</Segment>
-            <Segment horizontal>
-              {sellerApproved
-                ? 'Seller Approved'
-                : 'Waiting on Seller Approval'}
-            </Segment>
-          </Segment>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <Segment>
-          <Segment>{`Buyer ${buyer}`}</Segment>
-          <Segment>{`buyerApproved ${buyerApproved}`}</Segment>
-        </Segment>
-        <Segment>
-          <Segment horizontal>{`Seller ${seller}`}</Segment>
-          <Segment horizontal>{`Seller Approved ${sellerApproved}`}</Segment>
-        </Segment>
-      </div>
-    );
-  };
   render() {
     // display values if they exist
     return <Segment.Group>{this.renderAgreements()}</Segment.Group>;
