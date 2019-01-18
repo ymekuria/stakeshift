@@ -25,7 +25,7 @@ class Agreements extends Component {
   // sellerApproved: false
 
   renderAgreements = () => {
-    const currentUser = this.props.drizzleState.accounts[0];
+    const currentUserAddress = this.props.drizzleState.accounts[0];
     const { StakeShift } = this.props.drizzleState.contracts;
     // use the dataKey to get contract state from Drizzle
     const agreements = StakeShift.agreements[this.state.dataKey];
@@ -39,31 +39,22 @@ class Agreements extends Component {
         sellerApproved,
         isComplete
       } = agreements.value;
-      const currentUserParty = currentUser === buyer ? 'Buyer' : 'Seller';
-      const counterParty = currentUserParty === 'Buyer' ? 'Seller' : 'Buyer';
+      const currentUserParty =
+        currentUserAddress === buyer ? 'buyer' : 'seller';
+      const counterParty = currentUserParty === 'buyer' ? 'seller' : 'buyer';
+
       return (
         <Segment.Group>
           <Segment>{`descrpition ${description}`}</Segment>
           <Segment>
             <Segment>{`Agreement Amount ${amount}`}</Segment>
             <Segment>{`Status ${isComplete}`}</Segment>
-            <Segment>
-              <Segment basic>{`Buyer ${buyer}`}</Segment>
-              <ApprovalDisplay
-                agreements={agreements}
-                currentUserParty={currentUserParty}
-                counterParty={counterParty}
-              />
-            </Segment>
-            <Segment>
-              <Item>{`Seller ${seller}`}</Item>
-
-              <ApprovalDisplay
-                agreements={agreements}
-                currentUserParty={currentUserParty}
-                counterParty={counterParty}
-              />
-            </Segment>
+            <ApprovalDisplay
+              agreements={agreements.value}
+              currentUserParty={currentUserParty}
+              counterParty={counterParty}
+              currentUserAddress={currentUserAddress}
+            />
           </Segment>
         </Segment.Group>
       );
@@ -73,7 +64,5 @@ class Agreements extends Component {
     return <Segment.Group>{this.renderAgreements()}</Segment.Group>;
   }
 }
-
-// }
 
 export default withDrizzle(Agreements);
