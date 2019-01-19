@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Segment, Button, Item } from 'semantic-ui-react';
+import { connect } from '.react-redux';
 
 class ApprovalDisplay extends Component {
   renderApprovalButton = currentUserParty => {
@@ -16,6 +17,7 @@ class ApprovalDisplay extends Component {
     );
   };
   render() {
+    console.log('props', this.props);
     const { currentUserParty, counterParty, currentUserAddress } = this.props;
     const counterPartyAddress = this.props.agreements[counterParty];
     return (
@@ -43,4 +45,8 @@ class ApprovalDisplay extends Component {
     );
   }
 }
-export default ApprovalDisplay;
+
+const mapStateToProps = ({ currentUser }) => {
+  return { currentUser };
+};
+export default connect(mapStateToProps)(ApprovalDisplay);
