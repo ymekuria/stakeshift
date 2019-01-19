@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Segment, Button, Item } from 'semantic-ui-react';
-import { connect } from '.react-redux';
+import { connect } from 'react-redux';
 
 class ApprovalDisplay extends Component {
   renderApprovalButton = currentUserParty => {
@@ -46,7 +46,8 @@ class ApprovalDisplay extends Component {
   }
 }
 
-const mapStateToProps = ({ currentUser }) => {
-  return { currentUser };
+const mapStateToProps = state => {
+  console.log('state', state);
+  return { state };
 };
 export default connect(mapStateToProps)(ApprovalDisplay);

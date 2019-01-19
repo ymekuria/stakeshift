@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Segment, Item, Button } from 'semantic-ui-react';
 import withDrizzle from '../utils/withDrizzle';
 import ApprovalDisplay from './ApprovalDisplay';
+import { getCurrentUser } from '../actions';
 
 class Agreements extends Component {
   state = { dataKey: null };
@@ -39,6 +41,8 @@ class Agreements extends Component {
         sellerApproved,
         isComplete
       } = agreements.value;
+
+      this.props.getCurrentUser(currentUserAddress, agreements.value);
       const currentUserParty =
         currentUserAddress === buyer ? 'buyer' : 'seller';
       const counterParty = currentUserParty === 'buyer' ? 'seller' : 'buyer';
@@ -65,4 +69,7 @@ class Agreements extends Component {
   }
 }
 
-export default withDrizzle(Agreements);
+export default connect(
+  null,
+  { getCurrentUser }
+)(withDrizzle(Agreements));

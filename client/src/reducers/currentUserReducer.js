@@ -1,4 +1,4 @@
-import { GET_CURRENT_USER } from './types';
+import { GET_CURRENT_USER } from '../actions/types';
 
 const INTIAL_STATE = {};
 
