@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
-class NavBar extends Component {
-  state = { activeItem: 'New Agreement' };
+const NavBar = () => {
+  return (
+    <div className="ui secondary pointing menu">
+      <div className="item">
+        <Icon name="spinner" size="big" />
+      </div>
+      <Link to="/" className="item">
+        Stake Shift
+      </Link>
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-
-  render() {
-    const { activeItem } = this.state;
-
-    return (
-      <Menu secondary>
-        <Menu.Item
-          name="New Agreement"
-          active={activeItem === 'New Agreement'}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name="Agreements"
-          active={activeItem === 'Agreements'}
-          onClick={this.handleItemClick}
-        />
-      </Menu>
-    );
-  }
-}
+      <div className="right menu">
+        <Link to="/create" className="item">
+          Create Agreement
+        </Link>
+        <Link to="/agreements" className="item">
+          Agreements
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 export default NavBar;
