@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Button, Item } from 'semantic-ui-react';
+import { Segment, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 class ApprovalDisplay extends Component {

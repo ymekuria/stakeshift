@@ -1,23 +1,22 @@
-import React, { Component } from 'react';
-import { Menu, Icon } from 'semantic-ui-react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   return (
     <div className="ui secondary pointing menu">
       <div className="item">
-        <Icon name="spinner" size="big" />
+        <i className=" large spinner icon" />
       </div>
       <Link to="/" className="item">
-        Stake Shift
+        <b>Stake Shift</b>
       </Link>
 
       <div className="right menu">
         <Link to="/create" className="item">
-          Create Agreement
+          <button className="ui blue button">Creat Agreement</button>
         </Link>
         <Link to="/agreements" className="item">
-          Agreements
+          <button className="ui blue button">Creat Agreement</button>
         </Link>
       </div>
     </div>

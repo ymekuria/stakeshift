@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Item, Button } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 import { setCurrentUser } from '../actions';
 import withDrizzle from '../utils/withDrizzle';
 import ApprovalDisplay from './ApprovalDisplay';
@@ -18,13 +18,6 @@ class Agreements extends Component {
 
     this.setState({ dataKey });
   }
-  // amount: "5245423543523"
-  // buyer: "0x79F9Bb6AbF20Df043a7cC0Ed2b299D06C08b0a6A"
-  // buyerApproved: false
-  // description: "gsdgdfsg"
-  // isComplete: false
-  // seller: "0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413"
-  // sellerApproved: false
 
   renderAgreements = () => {
     const currentUserAddress = this.props.drizzleState.accounts[0];
