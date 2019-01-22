@@ -8,7 +8,6 @@ export default Component => {
       {drizzleContext => {
         const { drizzle, drizzleState, initialized } = drizzleContext;
         if (!initialized) {
-          // TODO: create loading Component
           return <Loading />;
         }
 

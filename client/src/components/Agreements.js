@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Segment, Item, Button } from 'semantic-ui-react';
+import { setCurrentUser } from '../actions';
 import withDrizzle from '../utils/withDrizzle';
 import ApprovalDisplay from './ApprovalDisplay';
-import { getCurrentUser } from '../actions';
 
 class Agreements extends Component {
   state = { dataKey: null };
@@ -32,20 +32,9 @@ class Agreements extends Component {
     // use the dataKey to get contract state from Drizzle
     const agreements = StakeShift.agreements[this.state.dataKey];
     if (agreements) {
-      const {
-        description,
-        amount,
-        buyer,
-        seller,
-        buyerApproved,
-        sellerApproved,
-        isComplete
-      } = agreements.value;
+      const { description, amount, isComplete } = agreements.value;
 
-      this.props.getCurrentUser(currentUserAddress, agreements.value);
-      const currentUserParty =
-        currentUserAddress === buyer ? 'buyer' : 'seller';
-      const counterParty = currentUserParty === 'buyer' ? 'seller' : 'buyer';
+      this.props.setCurrentUser(currentUserAddress, agreements.value);
 
       return (
         <Segment.Group>
@@ -53,12 +42,7 @@ class Agreements extends Component {
           <Segment>
             <Segment>{`Agreement Amount ${amount}`}</Segment>
             <Segment>{`Status ${isComplete}`}</Segment>
-            <ApprovalDisplay
-              agreements={agreements.value}
-              currentUserParty={currentUserParty}
-              counterParty={counterParty}
-              currentUserAddress={currentUserAddress}
-            />
+            <ApprovalDisplay />
           </Segment>
         </Segment.Group>
       );
@@ -71,5 +55,5 @@ class Agreements extends Component {
 
 export default connect(
   null,
-  { getCurrentUser }
+  { setCurrentUser }
 )(withDrizzle(Agreements));

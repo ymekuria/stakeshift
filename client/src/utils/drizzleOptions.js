@@ -14,7 +14,7 @@ const options = {
   },
   // syncAlways: true,
   polls: {
-    accounts: 3000
+    accounts: 300000
   },
   events: {}
 };

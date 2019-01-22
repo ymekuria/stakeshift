@@ -1,6 +1,6 @@
-import { GET_CURRENT_USER } from './types';
+import { SET_CURRENT_USER } from './types';
 
-export const getCurrentUser = (currentUserAddress, agreements) => {
+export const setCurrentUser = (currentUserAddress, agreements) => {
   const currentUserParty =
     currentUserAddress === agreements.buyer ? 'buyer' : 'seller';
 
@@ -10,7 +10,7 @@ export const getCurrentUser = (currentUserAddress, agreements) => {
   const currentUserApproved = agreements[`${currentUserParty}Approved`];
 
   return {
-    type: GET_CURRENT_USER,
+    type: SET_CURRENT_USER,
     payload: {
       currentUserParty,
       currentUserAddress,
