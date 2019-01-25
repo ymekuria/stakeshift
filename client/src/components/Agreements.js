@@ -30,14 +30,14 @@ class Agreements extends Component {
       this.props.setCurrentUser(currentUserAddress, agreements.value);
 
       return (
-        <Segment.Group>
-          <Segment>{`descrpition ${description}`}</Segment>
-          <Segment>
-            <Segment>{`Agreement Amount ${amount}`}</Segment>
-            <Segment>{`Status ${isComplete}`}</Segment>
+        <Segment>
+          <Segment basic>{`descrpition ${description}`}</Segment>
+          <Segment basic>
+            <Segment basic>{`Agreement Amount ${amount}`}</Segment>
+            <Segment basic>{`Status ${isComplete}`}</Segment>
             <ApprovalDisplay />
           </Segment>
-        </Segment.Group>
+        </Segment>
       );
     }
   };

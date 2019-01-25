@@ -8,10 +8,11 @@ class ApprovalDisplay extends Component {
       return <Segment>You Have Approved</Segment>;
     }
     return (
-      <button>
-        <i className="yellow large plus icon" />
-        `${currentUserParty.toUpperCase()} APPROVE`
-      </button>
+      <Button
+        primary
+        icon="add circle"
+        content={`${currentUserParty.toUpperCase()} APPROVE`}
+      />
     );
   };
   render() {
@@ -25,22 +26,20 @@ class ApprovalDisplay extends Component {
     return (
       <div>
         <Segment>
-          <Segment>
-            <Segment
-              basic
-            >{`${currentUserParty.toUpperCase()}     ${currentUserAddress}`}</Segment>
-            <Segment basic={true}>
-              {this.renderApprovalButton(currentUserParty, currentUserApproved)}
-            </Segment>
+          <Segment
+            basic
+          >{`${currentUserParty.toUpperCase()}     ${currentUserAddress}`}</Segment>
+          <Segment basic={true}>
+            {this.renderApprovalButton(currentUserParty, currentUserApproved)}
           </Segment>
-          <Segment>
-            <Segment
-              basic
-            >{`${counterParty.toUpperCase()}      ${counterPartyAddress}`}</Segment>
-            <Segment
-              basic
-            >{`PENDING ${counterParty.toUpperCase()} APPVOVAL`}</Segment>
-          </Segment>
+        </Segment>
+        <Segment>
+          <Segment
+            basic
+          >{`${counterParty.toUpperCase()}      ${counterPartyAddress}`}</Segment>
+          <Segment
+            basic
+          >{`PENDING ${counterParty.toUpperCase()} APPVOVAL`}</Segment>
         </Segment>
       </div>
     );
