@@ -1,26 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { SSL_OP_TLS_ROLLBACK_BUG } from 'constants';
 
 const NavBar = () => {
+  const { navBarStyle, titleStyle } = styles;
   return (
-    <div className="ui secondary pointing menu">
+    <div className="ui secondary pointing menu" style={navBarStyle}>
       <div className="item">
-        <i className=" large spinner icon" />
+        <i className="yellow large spinner icon" />
       </div>
-      <Link to="/" className="item">
+      <Link to="/" className="link item" style={titleStyle}>
         <b>Stake Shift</b>
       </Link>
 
       <div className="right menu">
-        <Link to="/create" className="item">
-          <button className="ui blue button">Creat Agreement</button>
+        <Link to="/create" className="link item">
+          <i className="link yellow large plus icon" />
         </Link>
-        <Link to="/agreements" className="item">
-          <button className="ui blue button">Creat Agreement</button>
+        <Link to="/agreements" className="link item">
+          <i className=" link yellow large list icon" />
         </Link>
       </div>
     </div>
   );
 };
 
+const styles = {
+  navBarStyle: {
+    backgroundColor: '#677a7f',
+    color: '#fff'
+  },
+  titleStyle: { color: '#fff' }
+};
 export default NavBar;

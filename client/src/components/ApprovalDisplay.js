@@ -8,19 +8,13 @@ class ApprovalDisplay extends Component {
       return <Segment>You Have Approved</Segment>;
     }
     return (
-      <Button
-        primary
-        icon="add circle"
-        content={`${currentUserParty.toUpperCase()} APPROVE`}
-      />
+      <button>
+        <i className="yellow large plus icon" />
+        `${currentUserParty.toUpperCase()} APPROVE`
+      </button>
     );
   };
   render() {
-    // console.log('props', this.props); counterParty: "seller"
-    // counterPartyAddress: "0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413"
-    // currentUserAddress: "0x79F9Bb6AbF20Df043a7cC0Ed2b299D06C08b0a6A"
-    // currentUserApproved: false
-    // currentUserParty: "buyer"
     const {
       currentUserParty,
       currentUserApproved,

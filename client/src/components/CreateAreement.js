@@ -72,7 +72,7 @@ class CreateAgreement extends Component {
             />
           </Form.Field>
           <Form.Field>
-            <Button primary icon="add circle" content="Create" />
+            <Button color="primary" icon="add circle" content="Create" />
           </Form.Field>
         </Form>
       </Segment>
