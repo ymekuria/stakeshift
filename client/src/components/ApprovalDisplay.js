@@ -3,6 +3,9 @@ import { Segment, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 class ApprovalDisplay extends Component {
+  onButtonPress = e => {
+    console.log('click', e);
+  };
   renderApprovalButton = (currentUserParty, currentUserApproved) => {
     if (currentUserApproved) {
       return <Segment>You Have Approved</Segment>;
@@ -12,6 +15,7 @@ class ApprovalDisplay extends Component {
         color="teal"
         icon="add circle"
         content={`${currentUserParty.toUpperCase()} APPROVE`}
+        onClick={this.onButtonPress}
       />
     );
   };
