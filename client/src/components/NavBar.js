@@ -14,13 +14,16 @@ const NavBar = () => {
       </Link>
 
       <div className="right menu">
-        <Link to="/create" className="link item">
+        <Link to="/create" className="item">
           <i className="link yellow large plus icon" />
         </Link>
 
-        <Link to="/agreements" className="link item">
+        <Link to="/agreements" className="item">
           <i className=" link yellow large list icon" />
         </Link>
+        <div className="item">
+          <i className=" link yellow large cog icon" />
+        </div>
       </div>
     </div>
   );
@@ -28,8 +31,9 @@ const NavBar = () => {
 
 const styles = {
   navBarStyle: {
-    backgroundColor: '#677a7f'
+    backgroundColor: '#677a7f',
+    padding: '10px'
   },
-  titleStyle: { color: '#fff' }
+  titleStyle: { color: '#fff', fontSize: '1.3em' }
 };
 export default NavBar;

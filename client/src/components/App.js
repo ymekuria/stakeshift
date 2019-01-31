@@ -8,18 +8,16 @@ import Agreements from './Agreements';
 class App extends Component {
   render() {
     return (
-      <div className="ui container">
-        <BrowserRouter>
-          <div>
-            <NavBar />
-            <Switch>
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/create" component={CreateAgreement} />
-              <Route exact path="/agreements" component={Agreements} />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <div>
+          <NavBar />
+          <Switch>
+            <Route exact path="/" component={Landing} />
+            <Route exact path="/create" component={CreateAgreement} />
+            <Route exact path="/agreements" component={Agreements} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }

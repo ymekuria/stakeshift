@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Button, Form, Input, Segment } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
+import withDrizzle from '../utils/withDrizzle';
 
 class CreateAgreement extends Component {
   renderInput = ({ input, label, placeholder, meta }) => {
@@ -24,6 +25,7 @@ class CreateAgreement extends Component {
   onSubmit = async ({ description, agreementAmount, sellerAddress }) => {
     const { drizzle, drizzleState } = this.props;
 
+    console.log('drizzle ', drizzle);
     const contract = drizzle.contracts.StakeShift;
 
     console.log('drizzle Accounts', drizzleState.accounts[0]);
@@ -72,7 +74,7 @@ class CreateAgreement extends Component {
             />
           </Form.Field>
           <Form.Field>
-            <Button color="primary" icon="add circle" content="Create" />
+            <Button color="teal" icon="add circle" content="Create" />
           </Form.Field>
         </Form>
       </Segment>
@@ -106,5 +108,5 @@ export default withRouter(
   reduxForm({
     form: 'createAgreement',
     validate
-  })(CreateAgreement)
+  })(withDrizzle(CreateAgreement))
 );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Item, Icon } from 'semantic-ui-react';
 import { setCurrentUser } from '../actions';
 import withDrizzle from '../utils/withDrizzle';
 import ApprovalDisplay from './ApprovalDisplay';
@@ -20,6 +20,11 @@ class Agreements extends Component {
   }
 
   renderAgreements = () => {
+    const {
+      descriptionStyle,
+      amountContainerStyle,
+      amountDisplayStyle
+    } = styles;
     const currentUserAddress = this.props.drizzleState.accounts[0];
     const { StakeShift } = this.props.drizzleState.contracts;
     // use the dataKey to get contract state from Drizzle
@@ -30,12 +35,22 @@ class Agreements extends Component {
       this.props.setCurrentUser(currentUserAddress, agreements.value);
 
       return (
-        <Segment>
-          <Segment basic>{`descrpition ${description}`}</Segment>
-          <Segment basic>
-            <Segment basic>{`Agreement Amount ${amount}`}</Segment>
-            <Segment basic>{`Status ${isComplete}`}</Segment>
-            <ApprovalDisplay />
+        <Segment raised>
+          <Segment>
+            <Segment basic>
+              <div style={descriptionStyle}>{description}</div>
+              <div style={amountContainerStyle}>
+                <div style={amountDisplayStyle}>
+                  <Icon color="yellow" size="large" name="ethereum" />
+                </div>
+
+                <div style={amountDisplayStyle}>{`${amount}  ETH`}</div>
+              </div>
+            </Segment>
+
+            <Segment basic>
+              <ApprovalDisplay />
+            </Segment>
           </Segment>
         </Segment>
       );
@@ -46,6 +61,20 @@ class Agreements extends Component {
   }
 }
 
+const styles = {
+  descriptionStyle: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    padding: '2em 1em',
+    fontSize: '1.6em'
+  },
+  amountContainerStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  amountDisplayStyle: { padding: '.5em', fontSize: '1.6em' }
+};
 export default connect(
   null,
   { setCurrentUser }
