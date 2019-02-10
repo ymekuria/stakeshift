@@ -25,7 +25,9 @@ class Agreements extends Component {
       amountContainerStyle,
       amountDisplayStyle
     } = styles;
+
     const currentUserAddress = this.props.drizzleState.accounts[0];
+
     const { StakeShift } = this.props.drizzleState.contracts;
     // use the dataKey to get contract state from Drizzle
     const agreements = StakeShift.agreements[this.state.dataKey];

@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
 import { Segment, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import withDrizzle from '../utils/withDrizzle';
 
 class ApprovalDisplay extends Component {
-  onButtonPress = e => {
-    console.log('click', e);
+  onButtonPress = async () => {
+    const { drizzle, drizzleState } = this.props;
+    const contract = drizzle.contracts.StakeShift;
+    const { currentUserParty, counterPartyAddress } = this.props.currentUser;
+
+    if (currentUserParty === 'seller') {
+      await contract.methods.sellerApprove.cacheSend(counterPartyAddress, {
+        from: drizzleState.accounts[0]
+      });
+    } else {
+      await contract.methods.buyerApprove.cacheSend({
+        from: drizzleState.accounts[0]
+      });
+    }
   };
+
   renderApprovalButton = (currentUserParty, currentUserApproved) => {
     if (currentUserApproved) {
       return <Segment>You Have Approved</Segment>;
@@ -19,6 +33,7 @@ class ApprovalDisplay extends Component {
       />
     );
   };
+
   render() {
     const {
       currentUserParty,
@@ -72,4 +87,5 @@ const styles = {
   },
   partyText: { padding: '10px', fontSize: '20px' }
 };
-export default connect(mapStateToProps)(ApprovalDisplay);
+
+export default connect(mapStateToProps)(withDrizzle(ApprovalDisplay));

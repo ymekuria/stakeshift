@@ -25,10 +25,7 @@ class CreateAgreement extends Component {
   onSubmit = async ({ description, agreementAmount, sellerAddress }) => {
     const { drizzle, drizzleState } = this.props;
 
-    console.log('drizzle ', drizzle);
     const contract = drizzle.contracts.StakeShift;
-
-    console.log('drizzle Accounts', drizzleState.accounts[0]);
 
     await contract.methods.createAgreement.cacheSend(
       description,
