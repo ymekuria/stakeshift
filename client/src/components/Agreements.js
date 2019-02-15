@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Segment, Item, Icon } from 'semantic-ui-react';
 import { setCurrentUser } from '../actions';
 import withDrizzle from '../utils/withDrizzle';
@@ -34,7 +35,11 @@ class Agreements extends Component {
     if (agreements) {
       const { description, amount, isComplete } = agreements.value;
 
-      this.props.setCurrentUser(currentUserAddress, agreements.value);
+      this.props.setCurrentUser(
+        currentUserAddress,
+        agreements.value,
+        this.props.history
+      );
 
       return (
         <Segment raised>
@@ -80,4 +85,4 @@ const styles = {
 export default connect(
   null,
   { setCurrentUser }
-)(withDrizzle(Agreements));
+)(withDrizzle(withRouter(Agreements)));
