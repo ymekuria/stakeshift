@@ -9,16 +9,6 @@ export const setCurrentUser = (
     currentUserAddress !== agreements.buyer &&
     currentUserAddress !== agreements.seller
   ) {
-    dispatch({
-      type: SET_CURRENT_USER,
-      payload: {
-        currentUserParty: 'NA',
-        currentUserAddress: 'NA',
-        currentUserApproved: 'NA',
-        counterParty: 'NA',
-        counterPartyAddress: 'NA'
-      }
-    });
     history.push('/create');
   }
   const currentUserParty =
