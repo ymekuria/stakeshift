@@ -5,11 +5,13 @@ export const setCurrentUser = (
   agreements,
   history
 ) => async dispatch => {
+  // redirects user to create an agreement if they are niether the buyer or seller
   if (
-    currentUserAddress !== agreements.buyer &&
-    currentUserAddress !== agreements.seller
+    currentUserAddress !== (agreements && agreements.buyer) &&
+    currentUserAddress !== (agreements && agreements.seller)
   ) {
     history.push('/create');
+    return;
   }
   const currentUserParty =
     currentUserAddress === agreements.buyer ? 'buyer' : 'seller';

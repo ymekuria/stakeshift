@@ -18,6 +18,21 @@ class Agreements extends Component {
     );
 
     this.setState({ dataKey });
+
+    const currentUserAddress = drizzleState.accounts[0];
+
+    const { StakeShift } = drizzleState.contracts;
+    // use the dataKey to get contract state from Drizzle
+    const agreements = StakeShift.agreements[this.state.dataKey];
+    console.log('componentDid outside if agreements');
+    // if (agreements) {
+    //   console.log('componentDid inside if agreements');
+    this.props.setCurrentUser(
+      currentUserAddress,
+      agreements && agreements.value,
+      this.props.history
+    );
+    // }
   }
 
   renderAgreements = () => {
@@ -27,7 +42,7 @@ class Agreements extends Component {
       amountDisplayStyle
     } = styles;
 
-    const currentUserAddress = this.props.drizzleState.accounts[0];
+    // const currentUserAddress = this.props.drizzleState.accounts[0];
 
     const { StakeShift } = this.props.drizzleState.contracts;
     // use the dataKey to get contract state from Drizzle
@@ -35,11 +50,11 @@ class Agreements extends Component {
     if (agreements) {
       const { description, amount } = agreements.value;
 
-      this.props.setCurrentUser(
-        currentUserAddress,
-        agreements.value,
-        this.props.history
-      );
+      // this.props.setCurrentUser(
+      //   currentUserAddress,
+      //   agreements.value,
+      //   this.props.history
+      // );
 
       return (
         <Segment raised>
