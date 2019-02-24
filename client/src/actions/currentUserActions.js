@@ -5,15 +5,18 @@ export const setCurrentUser = (
   agreements,
   history
 ) => async dispatch => {
-  if (currentUserAddress !== 'buyer' || currentUserAddress !== 'seller') {
+  if (
+    currentUserAddress !== agreements.buyer &&
+    currentUserAddress !== agreements.seller
+  ) {
     dispatch({
       type: SET_CURRENT_USER,
       payload: {
-        currentUserParty: '',
-        currentUserAddress: '',
-        currentUserApproved: '',
-        counterParty: '',
-        counterPartyAddress: ''
+        currentUserParty: 'NA',
+        currentUserAddress: 'NA',
+        currentUserApproved: 'NA',
+        counterParty: 'NA',
+        counterPartyAddress: 'NA'
       }
     });
     history.push('/create');

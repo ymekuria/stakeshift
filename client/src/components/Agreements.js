@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Segment, Item, Icon } from 'semantic-ui-react';
+import { Segment, Icon } from 'semantic-ui-react';
 import { setCurrentUser } from '../actions';
 import withDrizzle from '../utils/withDrizzle';
 import ApprovalDisplay from './ApprovalDisplay';
@@ -33,7 +33,7 @@ class Agreements extends Component {
     // use the dataKey to get contract state from Drizzle
     const agreements = StakeShift.agreements[this.state.dataKey];
     if (agreements) {
-      const { description, amount, isComplete } = agreements.value;
+      const { description, amount } = agreements.value;
 
       this.props.setCurrentUser(
         currentUserAddress,
