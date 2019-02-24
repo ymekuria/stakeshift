@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SSL_OP_TLS_ROLLBACK_BUG } from 'constants';
 
 const NavBar = () => {
   const { navBarStyle, titleStyle } = styles;
