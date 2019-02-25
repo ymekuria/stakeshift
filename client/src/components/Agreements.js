@@ -48,6 +48,7 @@ class Agreements extends Component {
     // use the dataKey to get contract state from Drizzle
     const agreements = StakeShift.agreements[this.state.dataKey];
     if (agreements) {
+      console.log('agreements for render', agreements);
       const { description, amount } = agreements.value;
 
       // this.props.setCurrentUser(
