@@ -11,6 +11,7 @@ class Agreements extends Component {
 
   async componentDidMount() {
     const { drizzle, drizzleState } = this.props;
+    const currentUserAddress = drizzleState.accounts[0];
 
     // connects drizzle to watch for changes on agreements method on smart contract and add to drizzleState
     const dataKey = await drizzle.contracts.StakeShift.methods.agreements.cacheCall(
@@ -18,21 +19,15 @@ class Agreements extends Component {
     );
 
     this.setState({ dataKey });
-
-    const currentUserAddress = drizzleState.accounts[0];
-
-    const { StakeShift } = drizzleState.contracts;
     // use the dataKey to get contract state from Drizzle
-    const agreements = StakeShift.agreements[this.state.dataKey];
-    console.log('componentDid outside if agreements');
-    // if (agreements) {
-    //   console.log('componentDid inside if agreements');
+    const agreements =
+      drizzleState.contracts.StakeShift.agreements[this.state.dataKey];
+
     this.props.setCurrentUser(
       currentUserAddress,
       agreements && agreements.value,
       this.props.history
     );
-    // }
   }
 
   renderAgreements = () => {
@@ -42,21 +37,14 @@ class Agreements extends Component {
       amountDisplayStyle
     } = styles;
 
-    // const currentUserAddress = this.props.drizzleState.accounts[0];
-
-    const { StakeShift } = this.props.drizzleState.contracts;
     // use the dataKey to get contract state from Drizzle
-    const agreements = StakeShift.agreements[this.state.dataKey];
+    const agreements = this.props.drizzleState.contracts.StakeShift.agreements[
+      this.state.dataKey
+    ];
+
     if (agreements) {
-      console.log('agreements for render', agreements);
       const { description, amount } = agreements.value;
-
-      // this.props.setCurrentUser(
-      //   currentUserAddress,
-      //   agreements.value,
-      //   this.props.history
-      // );
-
+      console.log('agreement', agreements);
       return (
         <Segment raised>
           <Segment>
@@ -79,6 +67,7 @@ class Agreements extends Component {
       );
     }
   };
+
   render() {
     return <Segment.Group>{this.renderAgreements()}</Segment.Group>;
   }

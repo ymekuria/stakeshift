@@ -48,6 +48,15 @@ contract StakeShift {
         agreements[buyer].sellerApproved = true;
     }
 
+    function cancelAgreement(address buyer) public {
+        require(
+            msg.sender == agreements[buyer].buyer || msg.sender == agreements[buyer].seller,
+            "Only buyer or seller can cancel transaction"
+            ); 
+            
+        delete(agreements[buyer]);
+    }
+
     function completeAgreement(address buyer) public {
         require(
             agreements[buyer].sellerApproved && agreements[buyer].buyerApproved,
