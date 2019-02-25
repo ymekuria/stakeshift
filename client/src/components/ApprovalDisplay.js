@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import withDrizzle from '../utils/withDrizzle';
 
 class ApprovalDisplay extends Component {
-  onButtonPress = async () => {
+  onApproveButtonPress = async () => {
     const { drizzle, drizzleState } = this.props;
     const contract = drizzle.contracts.StakeShift;
     const { currentUserParty, counterPartyAddress } = this.props.currentUser;
@@ -20,17 +20,33 @@ class ApprovalDisplay extends Component {
     }
   };
 
+  onCancelButtonPress = async () => {};
+
   renderApprovalButton = (currentUserParty, currentUserApproved) => {
     if (currentUserApproved) {
       return <Segment>You Have Approved</Segment>;
     }
     return (
-      <Button
-        color="teal"
-        icon="add circle"
-        content={`${currentUserParty.toUpperCase()} APPROVE`}
-        onClick={this.onButtonPress}
-      />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        }}
+      >
+        <Button
+          color="teal"
+          icon="add circle"
+          content={`${currentUserParty.toUpperCase()} APPROVE`}
+          onClick={this.onApproveButtonPress}
+        />
+        <Button
+          color="red"
+          icon="minus circle"
+          content={'CANCEL AGREEMENT'}
+          onClick={this.onCancelButtonPress}
+        />
+      </div>
     );
   };
 
