@@ -27,13 +27,7 @@ class ApprovalDisplay extends Component {
       return <Segment>You Have Approved</Segment>;
     }
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between'
-        }}
-      >
+      <div style={style.buttonContainer}>
         <Button
           color="teal"
           icon="add circle"
@@ -101,7 +95,11 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
-  partyText: { padding: '10px', fontSize: '20px' }
+  partyText: { padding: '10px', fontSize: '20px' },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
 };
-
 export default connect(mapStateToProps)(withDrizzle(ApprovalDisplay));
