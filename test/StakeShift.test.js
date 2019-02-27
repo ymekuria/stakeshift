@@ -159,4 +159,18 @@ describe('StakeShift', () => {
 
     assert(parseFloat(sellerBalance) > 109);
   });
+
+  it('buyer can delete an agreement', async () => {
+    agreement = await stakeShift.methods.agreements(buyer).call();
+    console.log(agreement);
+    await stakeShift.methods.cancelAgreement(buyer).send({
+      from: buyer,
+      gas: '1000000'
+    });
+    const deletedAgreement = await stakeShift.methods.agreements(buyer).call();
+    console.log('deleted agreement', deletedAgreement);
+    assert.notEqual(agreement.description, deletedAgreement.description);
+    assert.notEqual(agreement.buyer, deletedAgreement.buyer);
+    assert.equal(deletedAgreement.description, 0);
+  });
 });
