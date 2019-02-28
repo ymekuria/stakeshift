@@ -64,17 +64,22 @@ contract StakeShift {
     function sellerCancel(address buyer) public {
         require( 
             msg.sender == agreements[buyer].seller,
-            "Must be buyer to cancel"
+            "Must be seller to cancel"
         );
         
         agreements[buyer].sellerCancel = true;
-    }  
+    }
 
     function cancelAgreement(address buyer) public {
         require(
             msg.sender == agreements[buyer].buyer || msg.sender == agreements[buyer].seller,
             "only buyer or seller can cancel transaction"
             );
+
+        require(
+            agreements[buyer].buyerCancel == true && agreements[buyer].sellerCancel == true,
+            "buyer and seller must approve cancel"
+        )    
                
         delete(agreements[buyer]);
     }
