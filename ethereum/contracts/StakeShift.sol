@@ -6,8 +6,10 @@ contract StakeShift {
         address buyer;
         address seller;
         uint amount;
-        bool buyerApproved;
-        bool sellerApproved;
+        bool buyerApprove;
+        bool sellerApprove;
+        bool buyerCancel;
+        bool sellerCancel;
         bool isComplete;
         
     }
@@ -21,8 +23,10 @@ contract StakeShift {
             buyer: msg.sender,
             seller: currentSeller,
             amount: msg.value,
-            buyerApproved: false,
-            sellerApproved: false,
+            buyerApprove: false,
+            sellerApprove: false,
+            buyerCancel: false,
+            sellerCancel: false,
             isComplete: false
         });
         
@@ -36,7 +40,7 @@ contract StakeShift {
             "Only the buyer is authorized to approve"
         );
 
-        agreements[msg.sender].buyerApproved = true;    
+        agreements[msg.sender].buyerApprove = true;    
     }
 
     function sellerApprove(address buyer) public {
@@ -45,7 +49,7 @@ contract StakeShift {
             "Only the seller is authorized to approve"
         );
 
-        agreements[buyer].sellerApproved = true;
+        agreements[buyer].sellerApprove = true;
     }
     
     function cancelAgreement(address buyer) public {
@@ -53,13 +57,13 @@ contract StakeShift {
             msg.sender == agreements[buyer].buyer || msg.sender == agreements[buyer].seller,
             "only buyer or seller can cancel transaction"
             );
-                          
+               
         delete(agreements[buyer]);
     }
 
     function completeAgreement(address buyer) public {
         require(
-            agreements[buyer].sellerApproved && agreements[buyer].buyerApproved,
+            agreements[buyer].sellerApprove && agreements[buyer].buyerApprove,
             "Both buyer and seller have to approve"
         );
 

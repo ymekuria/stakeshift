@@ -43,7 +43,7 @@ describe('StakeShift', () => {
   });
 
   it('buyer can approve transaction from their address', async () => {
-    assert.equal(agreement.buyerApproved, false);
+    assert.equal(agreement.buyerApprove, false);
 
     // approve from buyers address
     await stakeShift.methods.buyerApprove().send({
@@ -53,14 +53,14 @@ describe('StakeShift', () => {
 
     // check agreement after buyerApprove function call
     agreement = await stakeShift.methods.agreements(buyer).call();
-    assert.equal(agreement.buyerApproved, true);
+    assert.equal(agreement.buyerApprove, true);
   });
 
-  it('seller cannot toggle buyerApproved boolean', async () => {
+  it('seller cannot toggle buyerApprove boolean', async () => {
     agreement = await stakeShift.methods.agreements(buyer).call();
-    assert.equal(agreement.buyerApproved, false);
+    assert.equal(agreement.buyerApprove, false);
 
-    // try toggle buyerApproved bolean from seller address
+    // try toggle buyerApprove bolean from seller address
     try {
       await stakeShift.methods.buyerApprove().send({
         from: seller,
@@ -74,11 +74,11 @@ describe('StakeShift', () => {
 
     // check agreement after buyerApprove function call
     agreement = await stakeShift.methods.agreements(buyer).call();
-    assert.equal(agreement.buyerApproved, false);
+    assert.equal(agreement.buyerApprove, false);
   });
 
   it('seller can approve transaction from their address', async () => {
-    assert.equal(agreement.sellerApproved, false);
+    assert.equal(agreement.sellerApprove, false);
 
     // approve from buyers address
     await stakeShift.methods.sellerApprove(buyer).send({
@@ -88,14 +88,14 @@ describe('StakeShift', () => {
 
     // check agreement after sellerApprove function call
     agreement = await stakeShift.methods.agreements(buyer).call();
-    assert.equal(agreement.sellerApproved, true);
+    assert.equal(agreement.sellerApprove, true);
   });
 
-  it('buyer cannot toggle sellerApproved boolean', async () => {
+  it('buyer cannot toggle sellerApprove boolean', async () => {
     agreement = await stakeShift.methods.agreements(buyer).call();
-    assert.equal(agreement.sellerApproved, false);
+    assert.equal(agreement.sellerApprove, false);
 
-    // try toggle buyerApproved bolean from buyer address
+    // try toggle buyerApprove bolean from buyer address
     try {
       await stakeShift.methods.sellerApprove(buyer).send({
         from: buyer,
@@ -109,12 +109,12 @@ describe('StakeShift', () => {
 
     // check agreement after buyerApprove function call
     agreement = await stakeShift.methods.agreements(buyer).call();
-    assert.equal(agreement.sellerApproved, false);
+    assert.equal(agreement.sellerApprove, false);
   });
 
   it('cannot complete an agreement without buyer and seller approval', async () => {
     agreement = await stakeShift.methods.agreements(buyer).call();
-    assert.equal(agreement.buyerApproved, false);
+    assert.equal(agreement.buyerApprove, false);
 
     try {
       await stakeShift.methods.completeAgreement(buyer).send({
