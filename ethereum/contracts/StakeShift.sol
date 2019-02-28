@@ -52,15 +52,24 @@ contract StakeShift {
         agreements[buyer].sellerApprove = true;
     }
 
-    function buyerCancel(address buyer) public {
+    function buyerCancel() public {
         require( 
-            msg.sender == agreements[buyer].buyer,
+            msg.sender == agreements[msg.sender].buyer,
             "Must be buyer to cancel"
         );
         
-        agreements[buyer].buyerCancel = true;
-    }    
-    
+        agreements[msg.sender].buyerCancel = true;
+    }  
+
+    function sellerCancel(address buyer) public {
+        require( 
+            msg.sender == agreements[buyer].seller,
+            "Must be buyer to cancel"
+        );
+        
+        agreements[buyer].sellerCancel = true;
+    }  
+
     function cancelAgreement(address buyer) public {
         require(
             msg.sender == agreements[buyer].buyer || msg.sender == agreements[buyer].seller,
