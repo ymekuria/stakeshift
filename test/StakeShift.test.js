@@ -16,7 +16,7 @@ beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
   buyer = accounts[0];
   seller = accounts[1];
-  amount = '10000000000000000000';
+  amount = '5000000000000000000';
 
   // deploying the contract to a ganache local test network
   stakeShift = await new web3.eth.Contract(contractJSONInterface)
@@ -43,6 +43,8 @@ describe('StakeShift', () => {
   });
 
   it('buyer can approve transaction from their address', async () => {
+    agreement = await stakeShift.methods.agreements(buyer).call();
+
     assert.equal(agreement.buyerApprove, false);
 
     // approve from buyers address
@@ -104,6 +106,7 @@ describe('StakeShift', () => {
       // if transaction goes through fail test
       assert(false);
     } catch (error) {
+      console.log('in catch');
       console.log(error.message);
     }
 
@@ -125,6 +128,27 @@ describe('StakeShift', () => {
       console.log(error.message);
     }
     assert.equal(agreement.isComplete, false);
+  });
+
+  it('buyer can approve agreement cancel', async () => {
+    await stakeShift.methods.buyerCancel().send({
+      from: buyer,
+      gas: '1000000'
+    });
+
+    agreement = await stakeShift.methods.agreements(buyer).call();
+    assert.equal(agreement.buyerCancel, true);
+  });
+
+  it('seller can approve agreement cancel', async () => {
+    await stakeShift.methods.sellerCancel(buyer).send({
+      from: seller,
+      gas: '1000000'
+    });
+
+    agreement = await stakeShift.methods.agreements(buyer).call();
+
+    assert.equal(agreement.sellerCancel, true);
   });
 
   it('can complete an agreement with buyer and seller approval', async () => {
@@ -156,21 +180,21 @@ describe('StakeShift', () => {
     // check if contract balance is transfered to the seller
     let sellerBalance = await web3.eth.getBalance(seller);
     sellerBalance = await web3.utils.fromWei(sellerBalance, 'ether');
-
-    assert(parseFloat(sellerBalance) > 109);
+    console.log('sellerBalance ', sellerBalance);
+    assert(parseFloat(sellerBalance) > 104);
   });
 
-  it('buyer can delete an agreement', async () => {
-    agreement = await stakeShift.methods.agreements(buyer).call();
-    console.log(agreement);
-    await stakeShift.methods.cancelAgreement(buyer).send({
-      from: buyer,
-      gas: '1000000'
-    });
-    const deletedAgreement = await stakeShift.methods.agreements(buyer).call();
-    console.log('deleted agreement', deletedAgreement);
-    assert.notEqual(agreement.description, deletedAgreement.description);
-    assert.notEqual(agreement.buyer, deletedAgreement.buyer);
-    assert.equal(deletedAgreement.description, 0);
-  });
+  // xit('buyer can delete an agreement', async () => {
+  //   agreement = await stakeShift.methods.agreements(buyer).call();
+  //   console.log(agreement);
+  //   await stakeShift.methods.cancelAgreement(buyer).send({
+  //     from: buyer,
+  //     gas: '1000000'
+  //   });
+  //   const deletedAgreement = await stakeShift.methods.agreements(buyer).call();
+  //   console.log('deleted agreement', deletedAgreement);
+  //   assert.notEqual(agreement.description, deletedAgreement.description);
+  //   assert.notEqual(agreement.buyer, deletedAgreement.buyer);
+  //   assert.equal(deletedAgreement.description, 0);
+  // });
 });
