@@ -147,8 +147,11 @@ describe('StakeShift', () => {
     });
 
     agreement = await stakeShift.methods.agreements(buyer).call();
-
     assert.equal(agreement.sellerCancel, true);
+  });
+
+  it('can cancel agreement', async () => {
+    assert.equal(false, true);
   });
 
   it('can complete an agreement with buyer and seller approval', async () => {
