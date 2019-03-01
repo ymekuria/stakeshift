@@ -51,7 +51,7 @@ contract StakeShift {
 
         agreements[buyer].sellerApprove = true;
     }
-
+    
     function buyerCancel() public {
         require( 
             msg.sender == agreements[msg.sender].buyer,
@@ -59,8 +59,8 @@ contract StakeShift {
         );
         
         agreements[msg.sender].buyerCancel = true;
-    }  
-
+    }    
+    
     function sellerCancel(address buyer) public {
         require( 
             msg.sender == agreements[buyer].seller,
@@ -69,17 +69,20 @@ contract StakeShift {
         
         agreements[buyer].sellerCancel = true;
     }
-
+    
     function cancelAgreement(address buyer) public {
         require(
             msg.sender == agreements[buyer].buyer || msg.sender == agreements[buyer].seller,
             "only buyer or seller can cancel transaction"
             );
-
+            
         require(
             agreements[buyer].buyerCancel == true && agreements[buyer].sellerCancel == true,
             "buyer and seller must approve cancel"
-        )    
+        ); 
+        
+        // return eth to buyer
+        agreements[buyer].buyer.transfer(address(this).balance);
                
         delete(agreements[buyer]);
     }
