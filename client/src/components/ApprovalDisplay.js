@@ -20,7 +20,13 @@ class ApprovalDisplay extends Component {
     }
   };
 
-  onCancelButtonPress = async () => {};
+  onCancelButtonPress = async () => {
+    const { drizzle, drizzleState } = this.props;
+
+    await drizzle.contracts.StakeShift.methods.cancelAgreement.cacheSend({
+      from: drizzleState.accounts[0]
+    });
+  };
 
   renderApprovalButton = (currentUserParty, currentUserApproved) => {
     if (currentUserApproved) {

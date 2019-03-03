@@ -127,7 +127,6 @@ describe('StakeShift', () => {
     } catch (error) {
       console.log(error.message);
     }
-    assert.equal(agreement.isComplete, false);
   });
 
   it('buyer can approve agreement cancel', async () => {
@@ -150,8 +149,51 @@ describe('StakeShift', () => {
     assert.equal(agreement.sellerCancel, true);
   });
 
-  it('can cancel agreement', async () => {
-    assert.equal(false, true);
+  it('cannot cancel agreement if both buyer and seller do not approve', async () => {
+    //case: both buyer and seller didn't approve
+    agreement = await stakeShift.methods.agreements(buyer).call();
+    try {
+      await stakeShift.methods.cancelAgreement(buyer).send({
+        from: buyer,
+        gas: '1000000'
+      });
+      // if transaction goes through fail test
+      assert(false);
+    } catch (error) {
+      assert(true);
+      console.log(error.message);
+    }
+  });
+
+  it('can cancel agreement when buyer and seller approve', async () => {
+    agreement = await stakeShift.methods.agreements(buyer).call();
+
+    try {
+      await stakeShift.methods.sellerCancel(buyer).send({
+        from: seller,
+        gas: '1000000'
+      });
+
+      await stakeShift.methods.buyerCancel().send({
+        from: buyer,
+        gas: '1000000'
+      });
+
+      await stakeShift.methods.cancelAgreement(buyer).send({
+        from: buyer,
+        gas: '1000000'
+      });
+    } catch (error) {
+      // fail if methods error
+      console.log(error);
+      assert(false);
+    }
+
+    const canceledAgreement = await stakeShift.methods.agreements(buyer).call();
+    console.log('agreement', agreement);
+    console.log('canceledAgreement', canceledAgreement);
+    assert.notEqual(agreement.description, canceledAgreement.description);
+    assert.notEqual(agreement.buyer, canceledAgreement.buyer);
   });
 
   it('can complete an agreement with buyer and seller approval', async () => {

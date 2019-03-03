@@ -78,7 +78,7 @@ contract StakeShift {
             
         require(
             agreements[buyer].buyerCancel == true && agreements[buyer].sellerCancel == true,
-            "buyer and seller must approve cancel"
+            "both buyer and seller must approve cancel"
         ); 
         
         // return eth to buyer
