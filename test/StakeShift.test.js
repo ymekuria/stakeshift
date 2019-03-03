@@ -168,6 +168,9 @@ describe('StakeShift', () => {
   it('can cancel agreement when buyer and seller approve', async () => {
     agreement = await stakeShift.methods.agreements(buyer).call();
 
+    let buyerBalance = await web3.eth.getBalance(buyer);
+    buyerBalance = await web3.utils.fromWei(buyerBalance, 'ether');
+
     try {
       await stakeShift.methods.sellerCancel(buyer).send({
         from: seller,
@@ -190,10 +193,17 @@ describe('StakeShift', () => {
     }
 
     const canceledAgreement = await stakeShift.methods.agreements(buyer).call();
-    console.log('agreement', agreement);
-    console.log('canceledAgreement', canceledAgreement);
+    let canceledBuyerBalance = await web3.eth.getBalance(buyer);
+    canceledBuyerBalance = await web3.utils.fromWei(
+      canceledBuyerBalance,
+      'ether'
+    );
+
+    // check if agreement was canceled
     assert.notEqual(agreement.description, canceledAgreement.description);
     assert.notEqual(agreement.buyer, canceledAgreement.buyer);
+    // check if eth is returned to buyer
+    assert(parseFloat(canceledBuyerBalance - buyerBalance) > 4);
   });
 
   it('can complete an agreement with buyer and seller approval', async () => {
@@ -225,7 +235,7 @@ describe('StakeShift', () => {
     // check if contract balance is transfered to the seller
     let sellerBalance = await web3.eth.getBalance(seller);
     sellerBalance = await web3.utils.fromWei(sellerBalance, 'ether');
-    console.log('sellerBalance ', sellerBalance);
+
     assert(parseFloat(sellerBalance) > 104);
   });
 
