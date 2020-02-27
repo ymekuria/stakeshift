@@ -45,6 +45,8 @@ class Agreements extends Component {
 
     if (agreements) {
       const { description, amount } = agreements.value;
+      const amountEth = web3.utils.fromWei(amount);
+      console.log('eth amount ', amountEth);
 
       return (
         <Segment raised>
@@ -56,7 +58,7 @@ class Agreements extends Component {
                   <Icon color="yellow" size="large" name="ethereum" />
                 </div>
 
-                <div style={amountDisplayStyle}>{`${amount}  ETH`}</div>
+                <div style={amountDisplayStyle}>{`${amountEth}  ETH`}</div>
               </div>
             </Segment>
 
