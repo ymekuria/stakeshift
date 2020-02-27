@@ -5,19 +5,20 @@ contract StakeShift {
         string description;
         address buyer;
         address seller;
-        uint amount;
+        uint256 amount;
         bool buyerApprove;
         bool sellerApprove;
         bool buyerCancel;
         bool sellerCancel;
         bool isComplete;
-        
     }
 
-    mapping(address => Agreement) public agreements; 
+    mapping(address => Agreement) public agreements;
 
-    function createAgreement(string agreementDescription, address currentSeller ) public payable {
-        
+    function createAgreement(string agreementDescription, address currentSeller)
+        public
+        payable
+    {
         Agreement memory newAgreement = Agreement({
             description: agreementDescription,
             buyer: msg.sender,
@@ -29,10 +30,10 @@ contract StakeShift {
             sellerCancel: false,
             isComplete: false
         });
-        
+
         agreements[msg.sender] = newAgreement;
-    
-    }       
+
+    }
 
     function buyerApprove() public {
         require(
@@ -40,7 +41,7 @@ contract StakeShift {
             "Only the buyer is authorized to approve"
         );
 
-        agreements[msg.sender].buyerApprove = true;    
+        agreements[msg.sender].buyerApprove = true;
     }
 
     function sellerApprove(address buyer) public {
@@ -51,40 +52,42 @@ contract StakeShift {
 
         agreements[buyer].sellerApprove = true;
     }
-    
+
     function buyerCancel() public {
-        require( 
+        require(
             msg.sender == agreements[msg.sender].buyer,
             "Must be buyer to cancel"
         );
-        
+
         agreements[msg.sender].buyerCancel = true;
-    }    
-    
+    }
+
     function sellerCancel(address buyer) public {
-        require( 
+        require(
             msg.sender == agreements[buyer].seller,
             "Must be seller to cancel"
         );
-        
+
         agreements[buyer].sellerCancel = true;
     }
-    
+
     function cancelAgreement(address buyer) public {
         require(
-            msg.sender == agreements[buyer].buyer || msg.sender == agreements[buyer].seller,
-            "only buyer or seller can cancel transaction"
-            );
-            
+            msg.sender == agreements[buyer].buyer ||
+                msg.sender == agreements[buyer].seller,
+            "Only buyer or seller can cancel transaction"
+        );
+
         require(
-            agreements[buyer].buyerCancel == true && agreements[buyer].sellerCancel == true,
-            "both buyer and seller must approve cancel"
-        ); 
-        
+            agreements[buyer].buyerCancel == true &&
+                agreements[buyer].sellerCancel == true,
+            "Both buyer and seller must approve cancel"
+        );
+
         // return eth to buyer
         agreements[buyer].buyer.transfer(address(this).balance);
-               
-        delete(agreements[buyer]);
+
+        delete (agreements[buyer]);
     }
 
     function completeAgreement(address buyer) public {
@@ -94,7 +97,7 @@ contract StakeShift {
         );
 
         agreements[buyer].seller.transfer(address(this).balance);
-        
+
         agreements[buyer].isComplete = true;
     }
 }
