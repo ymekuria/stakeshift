@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import web3 from 'web3';
 import { Segment, Icon } from 'semantic-ui-react';
 import { setCurrentUser } from '../actions';
 import withDrizzle from '../utils/withDrizzle';
