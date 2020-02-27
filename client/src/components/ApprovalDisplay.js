@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Segment, Button } from "semantic-ui-react";
-import { connect } from "react-redux";
-import withDrizzle from "../utils/withDrizzle";
+import React, { Component } from 'react';
+import { Segment, Button } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import withDrizzle from '../utils/withDrizzle';
 
 class ApprovalDisplay extends Component {
   onApproveButtonPress = async () => {
@@ -9,7 +9,7 @@ class ApprovalDisplay extends Component {
     const contract = drizzle.contracts.StakeShift;
     const { currentUserParty, counterPartyAddress } = this.props.currentUser;
 
-    if (currentUserParty === "seller") {
+    if (currentUserParty === 'seller') {
       await contract.methods.sellerApprove.cacheSend(counterPartyAddress, {
         from: drizzleState.accounts[0]
       });
@@ -33,7 +33,7 @@ class ApprovalDisplay extends Component {
       return <Segment>You Have Approved</Segment>;
     }
     return (
-      <div style={style.buttonContainer}>
+      <div style={styles.buttonContainer}>
         <Button
           color="teal"
           icon="add circle"
@@ -43,7 +43,7 @@ class ApprovalDisplay extends Component {
         <Button
           color="red"
           icon="minus circle"
-          content={"CANCEL AGREEMENT"}
+          content={'CANCEL AGREEMENT'}
           onClick={this.onCancelButtonPress}
         />
       </div>
@@ -97,15 +97,15 @@ const mapStateToProps = ({ currentUser }) => {
 
 const styles = {
   partyContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start"
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
-  partyText: { padding: "10px", fontSize: "20px" },
+  partyText: { padding: '10px', fontSize: '20px' },
   buttonContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between"
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 };
 export default connect(mapStateToProps)(withDrizzle(ApprovalDisplay));
