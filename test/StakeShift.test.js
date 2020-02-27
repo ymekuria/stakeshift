@@ -188,7 +188,7 @@ describe('StakeShift', () => {
       });
     } catch (error) {
       // fail if methods error
-      console.log(error);
+      console.log(error.message);
       assert(false);
     }
 
