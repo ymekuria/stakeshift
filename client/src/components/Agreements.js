@@ -44,7 +44,7 @@ class Agreements extends Component {
 
     if (agreements) {
       const { description, amount } = agreements.value;
-      console.log('agreement', agreements);
+
       return (
         <Segment raised>
           <Segment>
@@ -87,7 +87,6 @@ const styles = {
   },
   amountDisplayStyle: { padding: '.5em', fontSize: '1.6em' }
 };
-export default connect(
-  null,
-  { setCurrentUser }
-)(withDrizzle(withRouter(Agreements)));
+export default connect(null, { setCurrentUser })(
+  withDrizzle(withRouter(Agreements))
+);
